@@ -24,16 +24,12 @@ app.add_middleware(
 )
 
 # get all
-
-
 @app.get("/api/todo")
 async def get_todo():
     response = await fetch_all_todos()
     return response
 
 # get one
-
-
 @app.get("/api/todo{title}", response_model=Todo)
 async def get_todo_by_id(title):
     response = await fetch_one_todo(title)
@@ -41,7 +37,7 @@ async def get_todo_by_id(title):
         return response
     raise HTTPException(404, f"there is no TODO item with this title {title}")
 
-
+# post
 @app.post("/api/todo", response_model=Todo)
 async def post_todo(todo: Todo):
     response = await create_todo(todo.dict())
@@ -50,6 +46,7 @@ async def post_todo(todo: Todo):
     raise HTTPException(400, "Something went wrong/Bad Request")
 
 
+# update
 @app.put("/api/todo{title}/", response_model=Todo)
 async def put_todo(title: str, desc: str):
     response = await update_todo(title, desc)
@@ -57,8 +54,8 @@ async def put_todo(title: str, desc: str):
         return response
     raise HTTPException(404, f"there is no TODO item with this title {title}")
 
-
-@app.delete("/api/todo{title}")
+# delete
+@app.delete("/api/todo/{title}")
 async def delete_todo(title):
     response = await remove_todo(title)
     if response:

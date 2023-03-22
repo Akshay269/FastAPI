@@ -1,5 +1,3 @@
-
-
 # Mongodb driver
 import asyncio
 import motor.motor_asyncio
@@ -7,7 +5,7 @@ from model import Todo
 
 
 client = motor.motor_asyncio.AsyncIOMotorClient(
-    'mongodb+srv://fast:fast@fastapi.3n2jiuv.mongodb.net/fast?retryWrites=true&w=majority')
+    'mongodb+srv://fast:fast@fastapi.3n2jiuv.mongodb.net/test')
 
 database = client.TodoList
 collection = database.todo
@@ -39,5 +37,5 @@ async def update_todo(title, desc):
 
 
 async def remove_todo(title):
-    await collection.remove_one({"title": title})
+    await collection.delete_one({"title": title})
     return True
